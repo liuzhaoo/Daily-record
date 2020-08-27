@@ -77,7 +77,53 @@
 
   6. 假如 $x$ 为tensor ，则```x.mean(dim)``` 就是求对应维度的均值，```x.sum(dim)``` 是求对应维度的数值之和。同时，这个维度会消失。 
 
-  7. transform里的ToTensor除了将pic和narray类型的数据转换为
+  7. transform里的ToTensor除了将pic和narray类型的数据转换为tensor外，还会将最后一维的数据与第二维数据换位置。
+
+  8. ```transpose``` 函数转换维度：
+
+      ```python
+      # 方式1 
+      a = torch.ones(3, 2)
+      a_t = torch.transpose(a, 0, 1)   # 0，1维度互换
+      
+      # 方式2
+      a = torch.ones(3, 2)
+      a_t = a.transpose(0, 1)
+      ```
+
+  9. tensor放到GPU上，可以在定义时指定：```points_gpu = torch.tensor([[4.0, 1.0], [5.0, 3.0], [2.0, 1.0]], device='cuda')```  也可以使用.to操作：```points_gpu = points.to(device='cuda:0')```
+
+  10. 与numpy的交互
+
+      ```python
+      # tensor转换为numpy
+      points = torch.ones(3, 4)
+      points_np = points.numpy()
+      
+      # numpy转换为tensor
+      points = torch.from_numpy(points_np)
+      
+      points = torch.tensor(points_up) # 这种方式适用于list等类型，numpy应该也可以
+      ```
+
+  11. tensor保存与加载
+
+       ```python
+       # 保存
+       torch.save(points, '../data/p1ch3/ourpoints.t')  # 直接保存
+       
+       with open('../data/p1ch3/ourpoints.t','wb') as f:    #将文件名传递给一个描述符
+       	torch.save(points, f)
+       	
+       # 加载
+       points = torch.load('../data/p1ch3/ourpoints.t')
+       
+       # 或者
+       with open('../data/p1ch3/ourpoints.t','rb') as f:
+       	points = torch.load(f)
+       ```
+
+  12. 索引，切片，连接，变形操作
 
 
   ​    
