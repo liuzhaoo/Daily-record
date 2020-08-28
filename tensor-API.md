@@ -12,9 +12,23 @@
 
 #### tensor
 
-使用数据来构造一个tensor
-
 > `torch.tensor(data, dtype=None, device=None, requires_grad=False, pin_memory=False) → Tensor`
 
+​	使用数据来构造一个tensor
 
+​	**Parameters**  
+
+​		*data*  为要转换的数据 ，可以是列表等数据形式
+
+​		*dtype* 为数据类型，*device* 用来指定设备
+
+
+
+
+
+​		
+
+​		
+
+​		 
 
