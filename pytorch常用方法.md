@@ -110,17 +110,17 @@
 
        ```python
        # 保存
-       torch.save(points, '../data/p1ch3/ourpoints.t')  # 直接保存
+      torch.save(points, '../data/p1ch3/ourpoints.t')  # 直接保存
        
-       with open('../data/p1ch3/ourpoints.t','wb') as f:    #将文件名传递给一个描述符
+      with open('../data/p1ch3/ourpoints.t','wb') as f:    #将文件名传递给一个描述符
        	torch.save(points, f)
        	
        # 加载
        points = torch.load('../data/p1ch3/ourpoints.t')
-       
-       # 或者
-       with open('../data/p1ch3/ourpoints.t','rb') as f:
-       	points = torch.load(f)
+         
+        #或者
+      with open('../data/p1ch3/ourpoints.t','rb') as f:
+      	points = torch.load(f)
        ```
 
   12. 索引，切片，连接，变形操作
