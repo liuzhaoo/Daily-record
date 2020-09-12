@@ -92,15 +92,57 @@ tensor([-10.])
 
 > `torch.logspace`(*start*, *end*, *steps=100*, *base=10.0*, *out=None*, *dtype=None*, *layout=torch.strided*, *device=None*, *requires_grad=False*) → Tensor
 
+生成`steps`size的一维tensor，起点是 $base^{start}$,终点是$base^{end}$ , 步长计算为$base^{(end-start)\div(steps-1)}$
 
+#### eye
 
+> `torch.eye`(*n*, *m=None*, *out=None*, *dtype=None*, *layout=torch.strided*, *device=None*, *requires_grad=False*) → Tensor
 
+生成二维对角矩阵，n是行数，m为可选参数，用于指定列数，默认等于n‘
 
+#### empty / empty_like
 
+返回未初始化的tensor。`torch.empty((n,m))` `torch.empty_like(input)`  input是tensor
 
-​		
+ #### quantize_per_tensor
 
-​		
+> `torch.quantize_per_tensor`(*input*, *scale*, *zero_point*, *dtype*) → Tensor
 
-​		 
+将浮点型张量转换为给定scale和零点的量化张量。量化是指以低于浮点精度的位宽存储张量的技术，即可以减小模型尺寸，降低内存带宽要求，通常用于推理过程，因为不支持后向传播
 
+ $$Q(x,scale,zero\_point) = round(\frac{x}{scale} + zero\_point)$$
+
+### 索引，切片，连接，变异操作
+
+#### cat
+
+> `torch.cat`(*tensors*, *dim=0*, *out=None*) → Tensor
+
+在指定的维度（必须是给出的tensor已有的维度）上对给出的tensor进行连接
+
+**example**
+
+```python
+>>> x = torch.randn(2, 3)
+>>> x
+tensor([[ 0.6580, -1.0969, -0.4614],
+        [-0.1034, -0.5790,  0.1497]])
+>>> torch.cat((x, x, x), 0)
+tensor([[ 0.6580, -1.0969, -0.4614],
+        [-0.1034, -0.5790,  0.1497],
+        [ 0.6580, -1.0969, -0.4614],
+        [-0.1034, -0.5790,  0.1497],
+        [ 0.6580, -1.0969, -0.4614],
+        [-0.1034, -0.5790,  0.1497]])
+>>> torch.cat((x, x, x), 1)
+tensor([[ 0.6580, -1.0969, -0.4614,  0.6580, -1.0969, -0.4614,  0.6580,
+         -1.0969, -0.4614],
+        [-0.1034, -0.5790,  0.1497, -0.1034, -0.5790,  0.1497, -0.1034,
+         -0.5790,  0.1497]])
+```
+
+#### chunk
+
+>  `torch.chunk`(*input*, *chunks*, *dim=0*) → List of Tensors
+
+cat 的反操作:在指定维度将tensor分为 chunks个tensor,若该维度的长度不能整除chunks,则最后一个取最小值.
